@@ -49,30 +49,19 @@ class Tx_Mklog_Hooks_DataHandler
      * @param string $table
      * @param int    $id
      * @param array  $value
-     * @param TYPO3\CMS\Core\DataHandling\DataHandler
+     * @param TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler
      */
     public function processCmdmap_preProcess($command, $table, $id, $value, $dataHandler)
     {
         if ('pages' == $table) {
             switch ($command) {
                 case 'delete':
-                    $this->deleteDevlogEntriesByPageId($id);
                     $this->deleteMklogEntriesByPageId($id);
                     break;
                 case 'copy':
                     $this->removeLogTablesFromTablesThatCanBeCopied($dataHandler);
                     break;
             }
-        }
-    }
-
-    /**
-     * @param int $pageId
-     */
-    protected function deleteDevlogEntriesByPageId($pageId)
-    {
-        if (tx_rnbase_util_Extensions::isLoaded('devlog')) {
-            $this->getDatabaseConnection()->doDelete($this->getDevlogTableName(), 'pid = '.intval($pageId));
         }
     }
 
@@ -97,16 +86,6 @@ class Tx_Mklog_Hooks_DataHandler
     /**
      * @return string
      */
-    protected function getDevlogTableName()
-    {
-        tx_rnbase::load('Tx_Mklog_Utility_Devlog');
-
-        return Tx_Mklog_Utility_Devlog::getTableName();
-    }
-
-    /**
-     * @return string
-     */
     protected function getMklogTableName()
     {
         return \DMK\Mklog\Factory::getDevlogEntryRepository()->getEmptyModel()->getTableName();
@@ -116,17 +95,15 @@ class Tx_Mklog_Hooks_DataHandler
      * Es ist nie gewünscht dass die devlog und tx_mklog_devlog_entry Einträge beim kopieren einer Seite mitkopiert werden,
      * auch nicht für Admins.
      *
-     * @param TYPO3\CMS\Core\DataHandling\DataHandler
+     * @param TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler
      */
     protected function removeLogTablesFromTablesThatCanBeCopied($dataHandler)
     {
         $tablesThatCanBeCopied = array_flip($dataHandler->compileAdminTables());
 
-        $tablesThatShouldNotBeCopied = array($this->getDevlogTableName(), $this->getMklogTableName());
-        foreach ($tablesThatShouldNotBeCopied as $tableThatShouldNotBeCopied) {
-            if (isset($tablesThatCanBeCopied[$tableThatShouldNotBeCopied])) {
-                unset($tablesThatCanBeCopied[$tableThatShouldNotBeCopied]);
-            }
+        $tableThatShouldNotBeCopied = $this->getMklogTableName();
+        if (isset($tablesThatCanBeCopied[$tableThatShouldNotBeCopied])) {
+            unset($tablesThatCanBeCopied[$tableThatShouldNotBeCopied]);
         }
 
         $dataHandler->copyWhichTables = implode(',', array_flip($tablesThatCanBeCopied));
