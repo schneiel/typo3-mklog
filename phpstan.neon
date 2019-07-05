@@ -1,12 +1,8 @@
 includes:
     - .Build/vendor/saschaegerer/phpstan-typo3/extension.neon
 parameters:
+    bootstrap: %rootDir%/../../saschaegerer/phpstan-typo3/src/PhpstanTypo3Bootstrap.php
     level: max
     paths:
         - "%currentWorkingDirectory%/Classes"
-        - "%currentWorkingDirectory%/Configuration"
-        - "%currentWorkingDirectory%/scheduler"
-        - "%currentWorkingDirectory%/sanitizer"
-        - "%currentWorkingDirectory%/srv"
-    bootstrap: %rootDir%/../../saschaegerer/phpstan-typo3/src/PhpstanTypo3Bootstrap.php
 
