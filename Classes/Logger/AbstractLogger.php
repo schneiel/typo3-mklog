@@ -35,6 +35,11 @@ namespace DMK\Mklog\Logger;
 abstract class AbstractLogger implements \TYPO3\CMS\Core\Log\Writer\WriterInterface, \TYPO3\CMS\Core\SingletonInterface
 {
     /**
+     * @var array
+     */
+    protected $options;
+
+    /**
      * Constructs this log writer.
      *
      * @param array $options Configuration options - depends on the actual log writer
@@ -42,7 +47,7 @@ abstract class AbstractLogger implements \TYPO3\CMS\Core\Log\Writer\WriterInterf
     public function __construct(
         array $options = array()
     ) {
-        // $this->options = \Tx_Rnbase_Domain_Model_Data::getInstance($options);
+        $this->options = $options;
     }
 
     /**
@@ -61,7 +66,7 @@ abstract class AbstractLogger implements \TYPO3\CMS\Core\Log\Writer\WriterInterf
 
         $repo = $this->getDevlogEntryRepository();
 
-        /* @var $entry \DMK\Mklog\Domain\Model\DevlogEntryModel */
+        /** @var \DMK\Mklog\Domain\Model\DevlogEntryModel $entry */
         $entry = $repo->createNewModel();
         $entry->setCrdate($GLOBALS['EXEC_TIME']);
         $entry->setRunId($config->getCurrentRunId());
@@ -144,7 +149,8 @@ abstract class AbstractLogger implements \TYPO3\CMS\Core\Log\Writer\WriterInterf
             }
             // break if ther is no more ignore
             if ($ignore) {
-                $lastIgnoreKey = $key;
+
+                $lastIgnoreKey = (int) $key;
             }
         }
 

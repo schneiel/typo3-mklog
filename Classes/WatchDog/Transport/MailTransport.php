@@ -202,7 +202,7 @@ class MailTransport extends AbstractTransport implements \Tx_Rnbase_Interface_Si
     protected function sendMail(
         $content
     ) {
-        /* @var $mail \tx_rnbase_util_Mail */
+        /** @var \tx_rnbase_util_Mail $mail */
         $mail = \tx_rnbase::makeInstance('tx_rnbase_util_Mail');
         $mail->setSubject(
             'DevLog WatchDog on site '.

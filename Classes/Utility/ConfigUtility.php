@@ -39,21 +39,24 @@ class ConfigUtility implements \Tx_Rnbase_Interface_Singleton
     /**
      * Internal config storage.
      *
-     * @var Tx_Rnbase_Domain_Model_Data
+     * @var \Tx_Rnbase_Domain_Model_Data
      */
     private $storage = null;
 
     /**
      * Returns a storage.
      *
-     * @return Tx_Rnbase_Domain_Model_Data
+     * @return \Tx_Rnbase_Domain_Model_Data
      */
     private function getStorage()
     {
         if (null === $this->storage) {
-            $this->storage = \tx_rnbase::makeInstance(
+            /** @var \Tx_Rnbase_Domain_Model_Data $storage */
+            $storage = \tx_rnbase::makeInstance(
                 'Tx_Rnbase_Domain_Model_Data'
             );
+
+            $this->storage = $storage;
         }
 
         return $this->storage;
@@ -174,7 +177,7 @@ class ConfigUtility implements \Tx_Rnbase_Interface_Singleton
     /**
      * Transport for gelf loging.
      *
-     * @return int
+     * @return string
      */
     public function getGelfTransport()
     {

@@ -48,13 +48,13 @@ class DataConverterUtility implements \Tx_Rnbase_Interface_Singleton
      */
     public function encode($data)
     {
-        return json_encode($data, JSON_FORCE_OBJECT);
+        return (string) json_encode($data, JSON_FORCE_OBJECT);
     }
 
     /**
      * Decodes an extra data string into an array.
      *
-     * @param string $data
+     * @param string|array $data
      *
      * @return array
      */

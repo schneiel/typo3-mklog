@@ -117,7 +117,9 @@ class DevlogEntryRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepo
             if ($collection->isEmpty()) {
                 return;
             }
-            $lastExec = reset($collection->first());
+
+            $firstCollection = $collection->first();
+            $lastExec = reset($firstCollection);
             // nothing found to delete!?
             if (empty($lastExec)) {
                 return;
@@ -195,7 +197,7 @@ class DevlogEntryRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepo
     /**
      * Flattens an single select array.
      *
-     * @param array  $items
+     * @param array<int, array>  $items
      * @param string $field
      *
      * @return array

@@ -37,13 +37,14 @@ final class Factory
     /**
      * Returns a storage.
      *
-     * @return Tx_Rnbase_Domain_Model_Data
+     * @return \Tx_Rnbase_Domain_Model_Data
      */
     public static function getStorage()
     {
         static $storage = null;
 
         if (null === $storage) {
+            /** @var \Tx_Rnbase_Domain_Model_Data $storage */
             $storage = \tx_rnbase::makeInstance(
                 'Tx_Rnbase_Domain_Model_Data'
             );
@@ -55,7 +56,7 @@ final class Factory
     /**
      * Returns a cache.
      *
-     * @return tx_rnbase_cache_ICache
+     * @return \tx_rnbase_cache_ICache
      */
     public static function getCache()
     {
@@ -109,9 +110,12 @@ final class Factory
      */
     public static function getDevlogEntryRepository()
     {
-        return \tx_rnbase::makeInstance(
+        /** @var \DMK\Mklog\Domain\Repository\DevlogEntryRepository $repository */
+        $repository = \tx_rnbase::makeInstance(
             'DMK\\Mklog\\Domain\\Repository\\DevlogEntryRepository'
         );
+
+        return $repository;
     }
 
     /**
@@ -127,7 +131,7 @@ final class Factory
 
         if (!$transport instanceof \DMK\Mklog\WatchDog\Transport\InterfaceTransport) {
             throw new \Exception(
-                'The Transport "'.get_class($this->transport).'" '.
+                'The Transport "'.get_class($transport).'" '.
                 'has to implement the "\DMK\Mklog\WatchDog\Transport\InterfaceTransport"'
             );
         }

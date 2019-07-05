@@ -55,7 +55,7 @@ class UdpGelf extends \DMK\Mklog\WatchDog\Transport\Gelf\AbstractGelf
 
         return new \Gelf\Transport\UdpTransport(
             trim($host),
-            trim($port),
+            (int)trim($port),
             \Gelf\Transport\UdpTransport::CHUNK_SIZE_LAN
         );
     }

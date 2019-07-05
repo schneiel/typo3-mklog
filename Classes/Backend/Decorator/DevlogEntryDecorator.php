@@ -80,7 +80,7 @@ class DevlogEntryDecorator extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
                 'title="Filter this run"'.
             '>%2$s</button>',
             $entry->getRunId(),
-            strftime('%d.%m.%y %H:%M:%S', $entry->getProperty('crdate'))
+            strftime('%d.%m.%y %H:%M:%S', $entry->getCruserId())
         );
     }
 
@@ -202,7 +202,7 @@ class DevlogEntryDecorator extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
                 'onclick="DMK.DevLog.toggleData(%1$s);"'.
                 '>+ show data</a>'.
                 '<pre id="log-togggle-%1$s-data" style="display:none;">%2$s</pre>',
-            $entry->getProperty('uid'),
+            $entry->getUid(),
             htmlspecialchars($extraData)
         );
     }

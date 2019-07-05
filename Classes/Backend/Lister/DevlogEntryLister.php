@@ -37,7 +37,7 @@ class DevlogEntryLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
     /**
      * The devlog entry repository.
      *
-     * @return Tx_Rnbase_Domain_Repository_InterfaceSearch
+     * @return \DMK\Mklog\Domain\Repository\DevlogEntryRepository
      */
     protected function getRepository()
     {
@@ -72,7 +72,7 @@ class DevlogEntryLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
     /**
      * Initializes the filter array.
      *
-     * @return Tx_Rnbase_Backend_Lister_AbstractLister
+     * @return \Tx_Rnbase_Backend_Lister_AbstractLister
      */
     public function initFilter()
     {
@@ -102,7 +102,7 @@ class DevlogEntryLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
     /**
      * Returns the complete search form.
      *
-     * @return string
+     * @return array
      */
     public function getSearchFormData()
     {
@@ -161,7 +161,7 @@ class DevlogEntryLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
         $items = array('' => '');
 
         foreach ($latestRuns as $id) {
-            $items[$id] = strftime('%d.%m.%y %H:%M:%S', substr($id, 0, 10));
+            $items[$id] = strftime('%d.%m.%y %H:%M:%S', (int) substr($id, 0, 10));
         }
 
         return $items;
@@ -253,7 +253,7 @@ class DevlogEntryLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
      *
      * @param array $columns
      *
-     * @return array
+     * @return self
      */
     protected function addDecoratorColumns(
         array &$columns
@@ -279,6 +279,6 @@ class DevlogEntryLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
             'decorator' => $this->getDecorator(),
         );
 
-        return $columns;
+        return $this;
     }
 }

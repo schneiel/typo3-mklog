@@ -64,7 +64,7 @@ class DevlogModule extends \tx_rnbase_mod_ExtendedModFunc
      *
      * @param string $selectorStr
      *
-     * @return array or false if not needed. Return empty array if no item found
+     * @return array | false if not needed. Return empty array if no item found
      */
     protected function makeSubSelectors(&$selectorStr)
     {

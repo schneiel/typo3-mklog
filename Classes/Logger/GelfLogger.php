@@ -134,6 +134,7 @@ class GelfLogger extends AbstractLogger
             return;
         }
 
+        /** @var \Tx_Rnbase_Domain_Model_Data $options */
         $options = \tx_rnbase::makeInstance(
             'Tx_Rnbase_Domain_Model_Data',
             array(

@@ -59,9 +59,12 @@ class SchedulerWatchDog extends \Tx_Rnbase_Scheduler_Task
     public function getOptions()
     {
         if (null === $this->options) {
-            $this->options = \tx_rnbase::makeInstance(
+            /** @var \Tx_Rnbase_Domain_Model_Data $options */
+            $options = \tx_rnbase::makeInstance(
                 'Tx_Rnbase_Domain_Model_Data'
             );
+
+            $this->options = $options;
         }
 
         return $this->options;
@@ -200,7 +203,7 @@ class SchedulerWatchDog extends \Tx_Rnbase_Scheduler_Task
     /**
      * Creates the transport id.
      *
-     * @return \DMK\Mklog\WatchDog\Transport\InterfaceTransport
+     * @return string
      */
     protected function getTransportId()
     {
@@ -223,7 +226,7 @@ class SchedulerWatchDog extends \Tx_Rnbase_Scheduler_Task
         $options = array();
 
         foreach ($this->getOptions() as $key => $value) {
-            $key = \Tx_Rnbase_Utility_Strings::underscoredToLowerCamelCase($key);
+            $key = \Tx_Rnbase_Utility_Strings::underscoredToLowerCamelCase((string)$key);
             $options[] = ucfirst($key).': '.$value;
         }
 

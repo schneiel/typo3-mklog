@@ -40,14 +40,14 @@ abstract class AbstractTransport implements InterfaceTransport
     /**
      * Internal options storage.
      *
-     * @var Tx_Rnbase_Domain_Model_Data
+     * @var \Tx_Rnbase_Domain_Model_Data
      */
     private $options = null;
 
     /**
      * Returns a storage.
      *
-     * @return Tx_Rnbase_Domain_Model_Data
+     * @return \Tx_Rnbase_Domain_Model_Data
      */
     public function getOptions()
     {

@@ -31,27 +31,27 @@ namespace DMK\Mklog\Domain\Model;
  * Devlog entry Model.
  *
  * @method int              getPid()
- * @method DevlogEntryModel setPid() setPid(int $pid)
+ * @method DevlogEntryModel setPid(int $pid)
  * @method bool             hasPid()
  * @method int              getRunId()
- * @method DevlogEntryModel setRunId() setRunId(int $runId)
+ * @method DevlogEntryModel setRunId(int $runId)
  * @method bool             hasRunId()
  * @method string           getExtKey()
- * @method DevlogEntryModel setExtKey() setExtKey(string $extKey)
+ * @method DevlogEntryModel setExtKey(string $extKey)
  * @method bool             hasExtKey()
- * @method DevlogEntryModel setHost() setHost(string $host)
+ * @method DevlogEntryModel setHost(string $host)
  * @method bool             hasHost()
  * @method string           getMessage()
- * @method DevlogEntryModel setMessage() setMessage(string $message)
+ * @method DevlogEntryModel setMessage(string $message)
  * @method bool             hasMessage()
  * @method int              getSeverity()
- * @method DevlogEntryModel setSeverity() setSeverity(int $severity)
+ * @method DevlogEntryModel setSeverity(int $severity)
  * @method bool             hasSeverity()
  * @method int              getCruserId()
- * @method DevlogEntryModel setCruserId() setCruserId(int $cruserId)
+ * @method DevlogEntryModel setCruserId(int $cruserId)
  * @method bool             hasCruserId()
  * @method int              getCrdate()
- * @method DevlogEntryModel setCrdate() setCrdate(int $crdate)
+ * @method DevlogEntryModel setCrdate(int $crdate)
  * @method bool             hasCrdate()
  *
  * @author Michael Wagner
@@ -63,7 +63,7 @@ class DevlogEntryModel extends \Tx_Rnbase_Domain_Model_Base implements \DMK\Mklo
     /**
      * Override reset and dont load record after creating entry.
      *
-     * @return Tx_Rnbase_Domain_Model_Base
+     * @return \Tx_Rnbase_Domain_Model_Base
      */
     public function reset()
     {
@@ -78,7 +78,7 @@ class DevlogEntryModel extends \Tx_Rnbase_Domain_Model_Base implements \DMK\Mklo
     /**
      * Liefert den aktuellen Tabellenname.
      *
-     * @return Tabellenname als String
+     * @return string Tabellenname als String
      */
     public function getTableName()
     {
@@ -92,11 +92,13 @@ class DevlogEntryModel extends \Tx_Rnbase_Domain_Model_Base implements \DMK\Mklo
      */
     public function getTransportIds()
     {
-        if ($this->isPropertyEmpty('transport_ids')) {
+        /** @var string $ids */
+        $ids = $this->getProperty('transport_ids');
+        if (empty($ids)) {
             return array();
         }
 
-        return explode(',', $this->getProperty('transport_ids'));
+        return explode(',', $ids);
     }
 
     /**
@@ -104,7 +106,7 @@ class DevlogEntryModel extends \Tx_Rnbase_Domain_Model_Base implements \DMK\Mklo
      *
      * @param string $transportId
      *
-     * @return array
+     * @return \Tx_Rnbase_Domain_Model_Base.
      */
     public function addTransportId(
         $transportId
@@ -125,7 +127,10 @@ class DevlogEntryModel extends \Tx_Rnbase_Domain_Model_Base implements \DMK\Mklo
      */
     public function getExtraDataRaw()
     {
-        return $this->getProperty('extra_data');
+        /** @var string $extraData */
+        $extraData = $this->getProperty('extra_data');
+
+        return $extraData;
     }
 
     /**
@@ -145,7 +150,7 @@ class DevlogEntryModel extends \Tx_Rnbase_Domain_Model_Base implements \DMK\Mklo
      *
      * @param array $data
      *
-     * @return DevlogEntryModel
+     * @return \Tx_Rnbase_Domain_Model_Data
      */
     public function setExtraData(
         array $data
@@ -227,6 +232,7 @@ class DevlogEntryModel extends \Tx_Rnbase_Domain_Model_Base implements \DMK\Mklo
      */
     public function getTimestamp()
     {
+        /** @var \DateTime $dateTime */
         $dateTime = \DateTime::createFromFormat('U.u', $this->getCrdate().'.0216');
         // createFromFormat bzw. UNIX Timestamps haben per default GMT als Zeitzone.
         // Daher müssen wir zusätzlich die aktuelle Zeitzone setzen.
@@ -264,6 +270,7 @@ class DevlogEntryModel extends \Tx_Rnbase_Domain_Model_Base implements \DMK\Mklo
      */
     public function getHost()
     {
+        /** @var string $host */
         $host = $this->getProperty('host');
 
         // first check ext conf
@@ -284,7 +291,7 @@ class DevlogEntryModel extends \Tx_Rnbase_Domain_Model_Base implements \DMK\Mklo
             $host = gethostname();
         }
 
-        return $host;
+        return (string) $host;
     }
 
     /**
